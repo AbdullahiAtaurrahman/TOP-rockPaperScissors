@@ -1,74 +1,80 @@
-console.log('Hello World!');
+function getComputerChoice() {
+    let random = Math.random();
+
+    let choice = (random <= 0.3) ? "rock" :
+        (random > 0.3 && random < 0.6) ? "paper" :
+            (random > 0.6 && random <= 1) ? "scissors" : "not valid selection"
+    return choice
+};
+
+function getHumanChoice() {
+    let input = prompt("Enter your choice: ");
+    return input;
+};
 
 let computerScore = 0;
 let humanScore = 0;
 
+function playGame() {
 
-const choices = ['rock', 'paper', 'scissors'];
+    function playRound(human, computer) {
+        human = human.toLowerCase();
+        computer = computer.toLowerCase();
 
-function getComputerChoice() {
-    return choices[Math.floor(Math.random() * choices.length)];
-};
+        console.log(human);
+        console.log(computer);
 
-function getHumanChoice() {
-    let humanChoice = prompt("Enter your choice: ");
-    humanChoice = humanChoice.toLowerCase().trim();
+        if (human == 'scissors' && computer == 'paper') {
+            console.log("You win! Scissors beats Paper!")
+            humanScore++;
+        } else if (human == 'rock' && computer == 'scissors') {
+            console.log("You win! Rock beats Scissors")
+            humanScore++;
+        } else if (human == 'paper' && computer == 'rock') {
+            console.log("You win! Paper beats Rock”")
+            humanScore++;
+        } else if (human == 'paper' && computer == 'scissors') {
+            console.log("You lose! Scissors beats Paper!")
+            computerScore++;
+        } else if (human == 'scissors' && computer == 'rock') {
+            console.log("You lose! Scissors beats Rock!")
+            computerScore++;
+        } else if (human == 'rock' && computer == 'paper') {
+            console.log("You lose! Rock beats Paper!")
+            computerScore++;
+        } else {
+            console.log("It is a draw")
+        }
+    };
 
-    if (humanChoice !== 'rock' && humanChoice !== 'paper' && humanChoice !== 'scissors') {
-        alert("Please make a valid selection");
-        return;
+    for (let i = 0; i <= 5; i++) {
+        const computerChoice = getComputerChoice();
+        const humanChoice = getHumanChoice();
+
+        if (input === null) {
+            console.log("User cancelled the prompt.");
+            return null; // or handle it however you like
+        }
+
+
+        if (humanChoice != 'paper' && humanChoice != 'rock' && humanChoice != 'scissors') {
+            console.log("Play round again!");
+            i--;
+            continue;
+        }
+
+        playRound(humanChoice, computerChoice);
+
     }
-
-    return humanChoice;
-};
-
-function playRound(humanChoice, computerChoice) {
-
-    if (humanChoice == 'scissors' && computerChoice == 'paper') {
-        alert("Player wins!")
-        humanScore++;
-    } else if (humanChoice == 'rock' && computerChoice == 'scissors') {
-        alert("Player wins!")
-        humanScore++;
-    } else if (humanChoice == 'paper' && computerChoice == 'rock') {
-        alert("Player wins!")
-        humanScore++;
-    } else if (humanChoice == 'paper' && computerChoice == 'scissors') {
-        alert("Computer wins!")
-        computerScore++;
-    } else if (humanChoice == 'scissors' && computerChoice == 'rock') {
-        alert("Computer wins!")
-        computerScore++;;
-    } else if (humanChoice == 'rock' && computerChoice == 'paper') {
-        alert("Computer wins!")
-        computerScore++;
+    if (humanScore > computerScore) {
+        console.log("You win");
+    } else if (computerScore > humanScore) {
+        console.log("Computer win");
     } else {
-        alert("It is a draw")
+        console.log("Harder Luck next time");
     }
-};
-// const humanSelection = getHumanChoice();
-// const computerSelection = getComputerChoice();
 
-
-// playRound(humanSelection, computerSelection);
-
-// while (true) {
-
-for (let i = 0; i < 3; i++) {
-    const humanSelection = getHumanChoice();
-    if (humanSelection === null) break; // user clicked cancel
-
-    const computerSelection = getComputerChoice();
-    playRound(humanSelection, computerSelection);
-
-    console.log(`Score:\nPlayer: ${humanScore}\nComputer: ${computerScore}`);
 
 };
-if (humanScore > computerScore) {
-    console.log("PLayer is the winner")
-} else if (humanScore < computerScore) {
-    console.log("Computer is the winner")
-} else {
-    console.log("It is a draw");
-}
 
+playGame();
