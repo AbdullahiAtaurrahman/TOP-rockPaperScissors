@@ -7,8 +7,14 @@ function getComputerChoice() {
     return choice
 };
 
+const selected = document.querySelectorAll('.btns')
+
+console.log(selected);
 function getHumanChoice() {
-    let input = prompt("Enter your choice: ");
+
+    let input = selected.forEach(button => button.addEventListener('click', () => {
+        console.log(button.value);
+    }));
     return input;
 };
 
@@ -31,7 +37,7 @@ function playGame() {
             console.log("You win! Rock beats Scissors")
             humanScore++;
         } else if (human == 'paper' && computer == 'rock') {
-            console.log("You win! Paper beats Rock”")
+            console.log("You win! Paper beats Rock")
             humanScore++;
         } else if (human == 'paper' && computer == 'scissors') {
             console.log("You lose! Scissors beats Paper!")
@@ -46,17 +52,14 @@ function playGame() {
             console.log("It is a draw")
         }
     };
-
     for (let i = 0; i <= 5; i++) {
         const computerChoice = getComputerChoice();
         const humanChoice = getHumanChoice();
 
-        if (input === null) {
+        if (humanChoice === null) {
             console.log("User cancelled the prompt.");
             return null; // or handle it however you like
-        }
-
-
+        };
         if (humanChoice != 'paper' && humanChoice != 'rock' && humanChoice != 'scissors') {
             console.log("Play round again!");
             i--;
@@ -78,3 +81,8 @@ function playGame() {
 };
 
 playGame();
+
+
+
+
+

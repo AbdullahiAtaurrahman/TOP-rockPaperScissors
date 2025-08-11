@@ -9,9 +9,30 @@
 </head>
 
 <body>
-    <h1>Hello world!</h1>
+    <div class="container">
+        <button class="btns" value="rock" id="rock">Rock</button>
+        <button class="btns" value="paper" id="paper">Paper</button>
+        <button class="btns" value="Scissors" id="Scissors">Scissors</button>
+    </div>
 
-    <script src="./script.js"></script>
+    <div class="choice"></div>
+
+    <div class="scores">
+        <div class="computer">
+            <span>Computer</span>
+            <span id="compScore">0</span>
+        </div>
+        <div class="human">
+            <span>Human</span>
+            <span id="humanScore">0</span>
+        </div>
+    </div>
+    <div class="conclusion"></div>
+    <div class="text"></div>
+
+    <button id="restartBtn">Restart</button>
+
+    <script src="./scriptrv.js"></script>
 </body>
 
 </html>
