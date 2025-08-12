@@ -1,88 +1,62 @@
+let humanScore = 0;
+let computerScore = 0;
+const buttons = document.querySelectorAll('.btns');
+const choiceMade = document.querySelector('.choice')
+const compScore = document.querySelector('#compScore')
+const humScore = document.querySelector('#humanScore')
+const conclusion = document.querySelector('.conclusion')
+const restartBtn = document.querySelector('#restartBtn');
+const choices = ['rock', 'paper', 'scissors'];
+restartBtn.style.display = 'none';
+restartBtn.textContent = 'Restart game';
+choiceMade.style.display = 'none';
+restartBtn.addEventListener('click', () => {
+    humanScore = 0;
+    computerScore = 0;
+    humScore.textContent = humanScore;
+    compScore.textContent = computerScore;
+    conclusion.textContent = '';
+});
 function getComputerChoice() {
-    let random = Math.random();
-
-    let choice = (random <= 0.3) ? "rock" :
-        (random > 0.3 && random < 0.6) ? "paper" :
-            (random > 0.6 && random <= 1) ? "scissors" : "not valid selection"
+    let choice = choices[Math.floor(Math.random() * choices.length)]
     return choice
 };
+function determineWinner(human, computer) {
+    human = human.toLowerCase();
+    computer = computer.toLowerCase();
+    if ((human == 'scissors' && computer == 'paper') || (human == 'rock' && computer == 'scissors') || (human == 'paper' && computer == 'rock')) {
+        humanScore++;
+        humScore.textContent = humanScore
+    } else if ((human == 'paper' && computer == 'scissors') || (human == 'scissors' && computer == 'rock') || (human == 'rock' && computer == 'paper')) {
+        computerScore++;
+        compScore.textContent = computerScore
+    }
+    choiceMade.style.display = 'block';
+    restartBtn.style.display = 'block';
+    choiceMade.textContent = `You chose ${human}, computer chose ${computer}.`;
 
-const selected = document.querySelectorAll('.btns')
+    if (humanScore >= 3 || computerScore >= 3) {
 
-console.log(selected);
-function getHumanChoice() {
-
-    let input = selected.forEach(button => button.addEventListener('click', () => {
-        console.log(button.value);
-    }));
-    return input;
-};
-
-let computerScore = 0;
-let humanScore = 0;
-
-function playGame() {
-
-    function playRound(human, computer) {
-        human = human.toLowerCase();
-        computer = computer.toLowerCase();
-
-        console.log(human);
-        console.log(computer);
-
-        if (human == 'scissors' && computer == 'paper') {
-            console.log("You win! Scissors beats Paper!")
-            humanScore++;
-        } else if (human == 'rock' && computer == 'scissors') {
-            console.log("You win! Rock beats Scissors")
-            humanScore++;
-        } else if (human == 'paper' && computer == 'rock') {
-            console.log("You win! Paper beats Rock")
-            humanScore++;
-        } else if (human == 'paper' && computer == 'scissors') {
-            console.log("You lose! Scissors beats Paper!")
-            computerScore++;
-        } else if (human == 'scissors' && computer == 'rock') {
-            console.log("You lose! Scissors beats Rock!")
-            computerScore++;
-        } else if (human == 'rock' && computer == 'paper') {
-            console.log("You lose! Rock beats Paper!")
-            computerScore++;
+        if (humanScore > computerScore) {
+            conclusion.textContent = "You win the game!"
         } else {
-            console.log("It is a draw")
+            conclusion.textContent = "Computer wins the game!";
         }
-    };
-    for (let i = 0; i <= 5; i++) {
-        const computerChoice = getComputerChoice();
-        const humanChoice = getHumanChoice();
+        computerScore = 0;
+        humanScore = 0;
+        compScore.textContent = computerScore;
+        humScore.textContent = humanScore;
+        choiceMade.textContent = '';
 
-        if (humanChoice === null) {
-            console.log("User cancelled the prompt.");
-            return null; // or handle it however you like
-        };
-        if (humanChoice != 'paper' && humanChoice != 'rock' && humanChoice != 'scissors') {
-            console.log("Play round again!");
-            i--;
-            continue;
-        }
-
-        playRound(humanChoice, computerChoice);
-
+        restartBtn.style.display = 'none';
     }
-    if (humanScore > computerScore) {
-        console.log("You win");
-    } else if (computerScore > humanScore) {
-        console.log("Computer win");
-    } else {
-        console.log("Harder Luck next time");
-    }
-
-
 };
+function getHumanChoice() {
+    buttons.forEach(button => button.addEventListener('click', () => {
+        let choice = button.value;
+        let computerChoice = getComputerChoice();
+        determineWinner(choice, computerChoice);
+    }));
+}
 
-playGame();
-
-
-
-
-
+getHumanChoice()
